@@ -10,7 +10,7 @@ import {
 	SORT_ON_PROPERTIES_NAME
 } from "../rules";
 
-export const PLUGIN_NAME = "sort-decorators";
+export const PLUGIN_NAME = "@elsikora/sort-decorators";
 
 /**
  * @param ruleEntry the rule entry to set to all rules
