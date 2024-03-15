@@ -75,7 +75,7 @@
 		"build": "tsup-node src/index.ts --minify --sourcemap --treeshake",
 		"docs:update": "npx eslint-doc-generator",
 		"lint": "eslint .",
-		"release": "changeset publish",
+		"release": "npm run build && changeset publish",
 		"lint:fix": "npm run lint -- --fix",
 		"postschemas:update": "eslint src/lib/sort-rule/sort-rule.options.schema.json --fix",
 		"schemas:update": "typescript-json-schema src/lib/sort-rule/sort-rule.options.ts SortRuleOptions --noExtraProps --required -o src/lib/sort-rule/sort-rule.options.schema.json",
