@@ -8,9 +8,12 @@
 			"path": "./node_modules/cz-conventional-changelog"
 		}
 	},
-	"dependencies": {},
+	"dependencies": {
+
+	},
 	"description": "An ESLint plugin to sort decorators",
 	"devDependencies": {
+		"@changesets/cli": "^2.27.1",
 		"@cspell/eslint-plugin": "^6.31.1",
 		"@release-it/conventional-changelog": "^8.0.0",
 		"@shopify/eslint-plugin": "^42.1.0",
@@ -60,7 +63,7 @@
 	],
 	"license": "MIT",
 	"main": "./dist/index.js",
-	"name": "eslint-plugin-sort-decorators",
+	"name": "@elsikora/eslint-plugin-sort-decorators",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -69,6 +72,8 @@
 		"url": "git+https://github.com/ElsiKora/ESLint-Plugin-Sort-Decorators.git"
 	},
 	"scripts": {
+		"patch": "npx changeset",
+		"patch:release": "npx changeset version",
 		"build": "tsup-node src/index.ts --minify --sourcemap --treeshake",
 		"docs:update": "npx eslint-doc-generator",
 		"lint": "eslint .",
