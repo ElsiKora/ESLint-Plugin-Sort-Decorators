@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.7
+
+### Patch Changes
+
+-   9257cae: Update 'release' script in package.json
+
 ## 0.2.6
 
 ### Patch Changes
