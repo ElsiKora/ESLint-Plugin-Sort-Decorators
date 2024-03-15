@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.8
+
+### Patch Changes
+
+-   343b1af: Update plugin name in common configurations
+
 ## 0.2.7
 
 ### Patch Changes
