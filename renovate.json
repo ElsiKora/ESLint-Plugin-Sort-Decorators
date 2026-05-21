@@ -7,13 +7,16 @@
 			"extends": ["packages:eslint", "packages:stylelint"],
 			"groupName": "Linting packages",
 			"groupSlug": "linting",
-			"matchPackageNames": ["@cspell/eslint-plugin", "@shopify/eslint-plugin"]
+			"matchPackageNames": [
+				"@cspell/eslint-plugin",
+				"@shopify/eslint-plugin"
+			]
 		},
 		{
-			"groupName": "Release it",
-			"groupSlug": "release-it",
-			"matchPackageNames": ["release-it"],
-			"matchPackagePrefixes": ["@release-it/"]
+			"groupName": "Semantic release",
+			"groupSlug": "semantic-release",
+			"matchPackageNames": ["semantic-release"],
+			"matchPackagePrefixes": ["@semantic-release/"]
 		},
 		{
 			"automerge": true,
