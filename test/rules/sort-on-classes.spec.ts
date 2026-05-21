@@ -1,76 +1,10 @@
-import { SORT_ON_CLASSES_NAME, sortOnClasses } from "../../src/rules";
+import {
+	SORT_ON_CLASSES_NAME,
+	sortOnClasses
+} from "../../src/presentation/rule";
 import { tester } from "../tester";
 
 tester.run(SORT_ON_CLASSES_NAME, sortOnClasses, {
-	valid: [
-		{
-			code: `
-			@Single
-			class MyClass {}`,
-			name: "Single decorator on accessor"
-		},
-		{
-			code: `
-			@A
-			@B @C
-			class MyClass {}`,
-			name: "Basic decorators ordering"
-		},
-		{
-			code: `
-			@A()
-			@B(1)
-			@C({}, "abc")
-			class MyClass {}`,
-			name: "Basic decorator factories ordering"
-		},
-		{
-			code: `
-			@A() @B
-			@C()() @D
-			class MyClass {}`,
-			name: "Decorators mixed with factories"
-		},
-		{
-			code: `
-			@aCc
-			@abd()
-			class MyClass {}`,
-			name: "Case sensitive",
-			options: [{ caseSensitive: true }]
-		},
-		{
-			code: `
-			@abd() @aCc
-			class MyClass {}`,
-			name: "Case insensitive",
-			options: [{ caseSensitive: false }]
-		},
-		{
-			code: `
-			@a @bc @bc @d
-			class MyClass {}`,
-			name: "Duplicated names"
-		},
-		{
-			code: `
-			class MyClass {
-				@b @a @c
-				public run() { return 0; }
-			}`,
-			name: "Not applied if not on a class"
-		},
-		{
-			code: `
-			class MyClass {
-				@b @a @c
-				public run() { return 0; }
-			}`,
-			name: "Not applied if not on a class (with autoFix)",
-			options: [{ autoFix: true }]
-		}
-	],
-
 	invalid: [
 		{
 			code: `
@@ -148,7 +82,10 @@ tester.run(SORT_ON_CLASSES_NAME, sortOnClasses, {
 			code: `
 			@D @A @C @B
 			class MyClass {}`,
-			errors: [{ messageId: "incorrect-order" }, { messageId: "incorrect-order" }],
+			errors: [
+				{ messageId: "incorrect-order" },
+				{ messageId: "incorrect-order" }
+			],
 			name: "With multiple decorators (2 errors detected)"
 		},
 		{
@@ -205,6 +142,75 @@ tester.run(SORT_ON_CLASSES_NAME, sortOnClasses, {
 			output: `
 			@A @A @C @D
 			class MyClass {}`
+		}
+	],
+
+	valid: [
+		{
+			code: `
+			@Single
+			class MyClass {}`,
+			name: "Single decorator on accessor"
+		},
+		{
+			code: `
+			@A
+			@B @C
+			class MyClass {}`,
+			name: "Basic decorators ordering"
+		},
+		{
+			code: `
+			@A()
+			@B(1)
+			@C({}, "abc")
+			class MyClass {}`,
+			name: "Basic decorator factories ordering"
+		},
+		{
+			code: `
+			@A() @B
+			@C()() @D
+			class MyClass {}`,
+			name: "Decorators mixed with factories"
+		},
+		{
+			code: `
+			@aCc
+			@abd()
+			class MyClass {}`,
+			name: "Case sensitive",
+			options: [{ caseSensitive: true }]
+		},
+		{
+			code: `
+			@abd() @aCc
+			class MyClass {}`,
+			name: "Case insensitive",
+			options: [{ caseSensitive: false }]
+		},
+		{
+			code: `
+			@a @bc @bc @d
+			class MyClass {}`,
+			name: "Duplicated names"
+		},
+		{
+			code: `
+			class MyClass {
+				@b @a @c
+				public run() { return 0; }
+			}`,
+			name: "Not applied if not on a class"
+		},
+		{
+			code: `
+			class MyClass {
+				@b @a @c
+				public run() { return 0; }
+			}`,
+			name: "Not applied if not on a class (with autoFix)",
+			options: [{ autoFix: true }]
 		}
 	]
 });

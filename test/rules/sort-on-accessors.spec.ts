@@ -1,84 +1,10 @@
-import { SORT_ON_ACCESSORS_NAME, sortOnAccessors } from "../../src/rules";
+import {
+	SORT_ON_ACCESSORS_NAME,
+	sortOnAccessors
+} from "../../src/presentation/rule";
 import { tester } from "../tester";
 
 tester.run(SORT_ON_ACCESSORS_NAME, sortOnAccessors, {
-	valid: [
-		{
-			code: `
-			class MyClass {
-				@Single
-				public get accessor() { return 0; }
-			}`,
-			name: "Single decorator on accessor"
-		},
-		{
-			code: `
-			class MyClass {
-				@A
-				@B @C
-				public get accessor() { return 0; }
-			}`,
-			name: "Basic decorators ordering"
-		},
-		{
-			code: `
-			class MyClass {
-				@A()
-				@B(1)
-				@C({}, "abc")
-				public get accessor() { return 0; }
-			}`,
-			name: "Basic decorator factories ordering"
-		},
-		{
-			code: `
-			class MyClass {
-				@A() @B
-				@C()() @D
-				public get accessor() { return 0; }
-			}`,
-			name: "Decorators mixed with factories"
-		},
-		{
-			code: `
-			class MyClass {
-				@aCc
-				@abd()
-				public get accessor() { return 0; }
-			}`,
-			name: "Case sensitive",
-			options: [{ caseSensitive: true }]
-		},
-		{
-			code: `
-			class MyClass {
-				@abd() @aCc
-				public get accessor() { return 0; }
-			}`,
-			name: "Case insensitive",
-			options: [{ caseSensitive: false }]
-		},
-		{
-			code: `
-			@B @A @C
-			class MyClass {
-				@b @a @c
-				public property?: number;
-			}`,
-			name: "Not applied if not on an accessor"
-		},
-		{
-			code: `
-			@B @A @C
-			class MyClass {
-				@b @a @c
-				public property?: number;
-			}`,
-			name: "Not applied if not on an accessor (with autoFix)",
-			options: [{ autoFix: true }]
-		}
-	],
-
 	invalid: [
 		{
 			code: `
@@ -182,7 +108,10 @@ tester.run(SORT_ON_ACCESSORS_NAME, sortOnAccessors, {
 				@D @A @C @B
 				public get accessor() { return 0; }
 			}`,
-			errors: [{ messageId: "incorrect-order" }, { messageId: "incorrect-order" }],
+			errors: [
+				{ messageId: "incorrect-order" },
+				{ messageId: "incorrect-order" }
+			],
 			name: "Fix with multiple decorators (2 errors detected)"
 		},
 		{
@@ -242,6 +171,83 @@ tester.run(SORT_ON_ACCESSORS_NAME, sortOnAccessors, {
 				@D @C @B @A
 				public get accessor() { return 0; }
 			}`
+		}
+	],
+
+	valid: [
+		{
+			code: `
+			class MyClass {
+				@Single
+				public get accessor() { return 0; }
+			}`,
+			name: "Single decorator on accessor"
+		},
+		{
+			code: `
+			class MyClass {
+				@A
+				@B @C
+				public get accessor() { return 0; }
+			}`,
+			name: "Basic decorators ordering"
+		},
+		{
+			code: `
+			class MyClass {
+				@A()
+				@B(1)
+				@C({}, "abc")
+				public get accessor() { return 0; }
+			}`,
+			name: "Basic decorator factories ordering"
+		},
+		{
+			code: `
+			class MyClass {
+				@A() @B
+				@C()() @D
+				public get accessor() { return 0; }
+			}`,
+			name: "Decorators mixed with factories"
+		},
+		{
+			code: `
+			class MyClass {
+				@aCc
+				@abd()
+				public get accessor() { return 0; }
+			}`,
+			name: "Case sensitive",
+			options: [{ caseSensitive: true }]
+		},
+		{
+			code: `
+			class MyClass {
+				@abd() @aCc
+				public get accessor() { return 0; }
+			}`,
+			name: "Case insensitive",
+			options: [{ caseSensitive: false }]
+		},
+		{
+			code: `
+			@B @A @C
+			class MyClass {
+				@b @a @c
+				public property?: number;
+			}`,
+			name: "Not applied if not on an accessor"
+		},
+		{
+			code: `
+			@B @A @C
+			class MyClass {
+				@b @a @c
+				public property?: number;
+			}`,
+			name: "Not applied if not on an accessor (with autoFix)",
+			options: [{ autoFix: true }]
 		}
 	]
 });

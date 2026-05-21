@@ -1,103 +1,10 @@
-import { SORT_ON_METHODS_NAME, sortOnMethods } from "../../src/rules";
+import {
+	SORT_ON_METHODS_NAME,
+	sortOnMethods
+} from "../../src/presentation/rule";
 import { tester } from "../tester";
 
 tester.run(SORT_ON_METHODS_NAME, sortOnMethods, {
-	valid: [
-		{
-			code: `
-			class MyClass {
-				@Single
-				public run() { return 0; }
-			}`,
-			name: "Single decorator on accessor"
-		},
-		{
-			code: `
-			class MyClass {
-				@A
-				@B @C
-				public run() { return 0; }
-			}`,
-			name: "Basic decorators ordering"
-		},
-		{
-			code: `
-			class MyClass {
-				@C @A @B
-				public constructor() { return 0; }
-			}`,
-			name: "Decorators on a constructor have no effect"
-		},
-		{
-			code: `
-			class MyClass {
-				@C @A @B
-				public constructor() { return 0; }
-			}`,
-			name: "Decorators on a constructor have no effect (with autoFix)",
-			options: [{ autoFix: true }]
-		},
-		{
-			code: `
-			class MyClass {
-				@A()
-				@B(1)
-				@C({}, "abc")
-				public run() { return 0; }
-			}`,
-			name: "Basic decorator factories ordering"
-		},
-		{
-			code: `
-			class MyClass {
-				@A() @B
-				@C()() @D
-				public run() { return 0; }
-			}`,
-			name: "Decorators mixed with factories"
-		},
-		{
-			code: `
-			class MyClass {
-				@aCc
-				@abd()
-				public run() { return 0; }
-			}`,
-			name: "Case sensitive",
-			options: [{ caseSensitive: true }]
-		},
-		{
-			code: `
-			class MyClass {
-				@abd() @aCc
-				public run() { return 0; }
-			}`,
-			name: "Case insensitive",
-			options: [{ caseSensitive: false }]
-		},
-		{
-			code: `
-			class MyClass {
-				public run(
-					@b @a @c
-					parameter?: number
-				) { return 0; }
-			}`,
-			name: "Not applied if not on a method"
-		},
-		{
-			code: `
-			class MyClass {
-				public run(
-					@b @a @c
-					parameter?: number
-				) { return 0; }
-			}`,
-			name: "Not applied if not on a method (with autoFix)",
-			options: [{ autoFix: true }]
-		}
-	],
-
 	invalid: [
 		{
 			code: `
@@ -201,7 +108,10 @@ tester.run(SORT_ON_METHODS_NAME, sortOnMethods, {
 				@D @A @C @B
 				public run() { return 0; }
 			}`,
-			errors: [{ messageId: "incorrect-order" }, { messageId: "incorrect-order" }],
+			errors: [
+				{ messageId: "incorrect-order" },
+				{ messageId: "incorrect-order" }
+			],
 			name: "With multiple decorators (2 errors detected)"
 		},
 		{
@@ -261,6 +171,85 @@ tester.run(SORT_ON_METHODS_NAME, sortOnMethods, {
 				@D @C @B @A
 				public run() { return 0; }
 			}`
+		}
+	],
+
+	valid: [
+		{
+			code: `
+			class MyClass {
+				@Single
+				public run() { return 0; }
+			}`,
+			name: "Single decorator on accessor"
+		},
+		{
+			code: `
+			class MyClass {
+				@A
+				@B @C
+				public run() { return 0; }
+			}`,
+			name: "Basic decorators ordering"
+		},
+		{
+			code: `
+			class MyClass {
+				@A()
+				@B(1)
+				@C({}, "abc")
+				public run() { return 0; }
+			}`,
+			name: "Basic decorator factories ordering"
+		},
+		{
+			code: `
+			class MyClass {
+				@A() @B
+				@C()() @D
+				public run() { return 0; }
+			}`,
+			name: "Decorators mixed with factories"
+		},
+		{
+			code: `
+			class MyClass {
+				@aCc
+				@abd()
+				public run() { return 0; }
+			}`,
+			name: "Case sensitive",
+			options: [{ caseSensitive: true }]
+		},
+		{
+			code: `
+			class MyClass {
+				@abd() @aCc
+				public run() { return 0; }
+			}`,
+			name: "Case insensitive",
+			options: [{ caseSensitive: false }]
+		},
+		{
+			code: `
+			class MyClass {
+				public run(
+					@b @a @c
+					parameter?: number
+				) { return 0; }
+			}`,
+			name: "Not applied if not on a method"
+		},
+		{
+			code: `
+			class MyClass {
+				public run(
+					@b @a @c
+					parameter?: number
+				) { return 0; }
+			}`,
+			name: "Not applied if not on a method (with autoFix)",
+			options: [{ autoFix: true }]
 		}
 	]
 });

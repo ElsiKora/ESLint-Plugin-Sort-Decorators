@@ -16,7 +16,7 @@ Sort decorators on accessors.
 | `caseSensitive` | If true, enforce properties to be in case-sensitive order.               | _boolean_       |
 | `direction`     | Specify the direction of the ordering.                                   | `asc` \| `desc` |
 
-> Definitive information in the [JSON schema](../../src/lib/sort-rule/sort-rule.options.schema.json).
+> Definitive information in the [JSON schema](../../src/infrastructure/schema/sort-rule-options.schema.json).
 
 ### Defaults
   
