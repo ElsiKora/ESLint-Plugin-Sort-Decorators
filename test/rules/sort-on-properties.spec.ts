@@ -1,82 +1,10 @@
-import { SORT_ON_PROPERTIES_NAME, sortOnProperties } from "../../src/rules";
+import {
+	SORT_ON_PROPERTIES_NAME,
+	sortOnProperties
+} from "../../src/presentation/rule";
 import { tester } from "../tester";
 
 tester.run(SORT_ON_PROPERTIES_NAME, sortOnProperties, {
-	valid: [
-		{
-			code: `
-			class MyClass {
-				@Single
-				public property?: number;
-			}`,
-			name: "Single decorator on accessor"
-		},
-		{
-			code: `
-			class MyClass {
-				@A
-				@B @C
-				public property?: number;
-			}`,
-			name: "Basic decorators ordering"
-		},
-		{
-			code: `
-			class MyClass {
-				@A()
-				@B(1)
-				@C({}, "abc")
-				public property?: number;
-			}`,
-			name: "Basic decorator factories ordering"
-		},
-		{
-			code: `
-			class MyClass {
-				@A() @B
-				@C()() @D
-				public property?: number;
-			}`,
-			name: "Decorators mixed with factories"
-		},
-		{
-			code: `
-			class MyClass {
-				@aCc
-				@abd()
-				public property?: number;
-			}`,
-			name: "Case sensitive",
-			options: [{ caseSensitive: true }]
-		},
-		{
-			code: `
-			class MyClass {
-				@abd() @aCc
-				public property?: number;
-			}`,
-			name: "Case insensitive",
-			options: [{ caseSensitive: false }]
-		},
-		{
-			code: `
-			class MyClass {
-				@b @a @c
-				protected get accessor() { return 0; }
-			}`,
-			name: "Not applied if not on a property"
-		},
-		{
-			code: `
-			class MyClass {
-				@b @a @c
-				protected get accessor() { return 0; }
-			}`,
-			name: "Not applied if not on a property (with autoFix)",
-			options: [{ autoFix: true }]
-		}
-	],
-
 	invalid: [
 		{
 			code: `
@@ -231,6 +159,81 @@ tester.run(SORT_ON_PROPERTIES_NAME, sortOnProperties, {
 				@D @C @B @A
 				public property?: number;
 			}`
+		}
+	],
+
+	valid: [
+		{
+			code: `
+			class MyClass {
+				@Single
+				public property?: number;
+			}`,
+			name: "Single decorator on accessor"
+		},
+		{
+			code: `
+			class MyClass {
+				@A
+				@B @C
+				public property?: number;
+			}`,
+			name: "Basic decorators ordering"
+		},
+		{
+			code: `
+			class MyClass {
+				@A()
+				@B(1)
+				@C({}, "abc")
+				public property?: number;
+			}`,
+			name: "Basic decorator factories ordering"
+		},
+		{
+			code: `
+			class MyClass {
+				@A() @B
+				@C()() @D
+				public property?: number;
+			}`,
+			name: "Decorators mixed with factories"
+		},
+		{
+			code: `
+			class MyClass {
+				@aCc
+				@abd()
+				public property?: number;
+			}`,
+			name: "Case sensitive",
+			options: [{ caseSensitive: true }]
+		},
+		{
+			code: `
+			class MyClass {
+				@abd() @aCc
+				public property?: number;
+			}`,
+			name: "Case insensitive",
+			options: [{ caseSensitive: false }]
+		},
+		{
+			code: `
+			class MyClass {
+				@b @a @c
+				protected get accessor() { return 0; }
+			}`,
+			name: "Not applied if not on a property"
+		},
+		{
+			code: `
+			class MyClass {
+				@b @a @c
+				protected get accessor() { return 0; }
+			}`,
+			name: "Not applied if not on a property (with autoFix)",
+			options: [{ autoFix: true }]
 		}
 	]
 });
